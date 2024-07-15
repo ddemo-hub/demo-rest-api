@@ -2,6 +2,7 @@ package com.example.demo_rest_api.advice;
 
 import java.util.NoSuchElementException;
 
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -15,6 +16,17 @@ import com.example.demo_rest_api.dto.ErrorDTO;
 public class ApplicationExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorDTO> handleInvalidRequest(HttpMessageNotReadableException ex) {
+        ErrorDTO responseDTO = ErrorDTO.builder()
+                                .status(400)
+                                .error("BAD REQUEST")
+                                .message(ex.getMessage())
+                                .build();
+
+        return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DuplicateKeyException.class)
+    public ResponseEntity<ErrorDTO> handleDuplication(DuplicateKeyException ex) {
         ErrorDTO responseDTO = ErrorDTO.builder()
                                 .status(400)
                                 .error("BAD REQUEST")

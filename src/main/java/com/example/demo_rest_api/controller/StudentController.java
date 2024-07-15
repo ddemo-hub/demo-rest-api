@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class StudentController {
-    private Logger logger = LoggerFactory.getLogger(StudentController.class);        
+    private final Logger logger = LoggerFactory.getLogger(StudentController.class);        
 
     private final StudentService studentService;
 
@@ -35,13 +35,15 @@ public class StudentController {
             throw new HttpMessageNotReadableException("stdNumber field must be provided", httpInputMessage); 
         }
 
-        studentService.saveStudent(studentDTO);
+        studentService.createStudent(studentDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(studentDTO);
     }
 
     // Update Endpoint
     @PutMapping("/v1/student/{stdNumber}")
     public ResponseEntity<StudentDTO> updateStudent(@PathVariable String stdNumber, @Valid @RequestBody StudentDTO studentDTO) {
+        logger.info("Update request sent by the student: " + stdNumber);
+
         studentService.updateStudent(stdNumber, studentDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(studentDTO);
     }
