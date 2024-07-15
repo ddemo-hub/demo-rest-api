@@ -19,7 +19,7 @@ public class ApplicationExceptionHandler {
         ErrorDTO responseDTO = ErrorDTO.builder()
                                 .status(400)
                                 .error("BAD REQUEST")
-                                .message(ex.getMessage())
+                                .message(ex.getMostSpecificCause().getMessage())
                                 .build();
 
         return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
