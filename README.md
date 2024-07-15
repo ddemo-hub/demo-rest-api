@@ -13,7 +13,7 @@
 - __src__
     - __main__
 	    - __recources__
-		    - __application.properties__ *-> App level configs (logger, scheduler, cache)* 
+		    - __application.properties__ *-> App level configs (logger, database drivers)* 
 - __.env__ *-> MySQL connection configs*
    
 
